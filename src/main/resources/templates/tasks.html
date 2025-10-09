@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 80%;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #4a00e0;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-weight: 600;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .input-section {
+            padding: 25px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-section input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-section input:focus {
+            border-color: #4a00e0;
+        }
+
+        .input-section button {
+            background-color: #4a00e0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .input-section button:hover {
+            background-color: #3a00b0;
+        }
+
+        .tasks-section {
+            padding: 0 25px 25px;
+        }
+
+        .tasks-section h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 500;
+            font-size: 20px;
+        }
+
+        #taskList {
+            list-style-type: none;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .task-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .task-text {
+            flex: 1;
+            margin: 0 15px;
+            font-size: 16px;
+        }
+
+        .completed .task-text {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .toggle-btn, .delete-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .toggle-btn {
+            background-color: #00c851;
+            color: white;
+        }
+
+        .toggle-btn:hover {
+            background-color: #009e3d;
+        }
+
+        .delete-btn {
+            background-color: #ff3547;
+            color: white;
+            margin-left: 8px;
+        }
+
+        .delete-btn:hover {
+            background-color: #cc002b;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+        }
+
+        .empty-state p {
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 500px) {
+            .container { border-radius: 10px; }
+            .input-section { flex-direction: column; }
+            .input-section button { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>My Todo List</h1>
+        <p>Organize your tasks efficiently</p>
+    </div>
+
+    <!-- Add Task Form -->
+    <div class="input-section">
+        <form th:action="@{/tasks}" method="post" style="display:flex; width:100%;">
+            <input type="text" name="title" placeholder="Enter a new task..." required>
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+
+    <div class="tasks-section">
+        <h2>Your Tasks</h2>
+        <ul id="taskList">
+            <li th:each="task : ${tasks}" th:classappend="${task.completed} ? 'task-item completed' : 'task-item'">
+                <span class="task-text" th:text="${task.title}">Sample Task</span>
+
+                <!-- Toggle Complete Form -->
+                <form th:action="@{/tasks/{id}/toggle(id=${task.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="toggle-btn" th:text="${task.completed} ? 'Mark Pending' : 'Mark Complete'">Mark Complete</button>
+                </form>
+
+                <!-- Delete Form -->
+                <form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="delete-btn">Delete</button>
+                </form>
+            </li>
+        </ul>
+
+        <div th:if="${#lists.isEmpty(tasks)}" class="empty-state">
+            <p>No tasks yet. Add a task to get started!</p>
+        </div>
+
+        <div class="stats">
+            <span>Total: <span th:text="${#lists.size(tasks)}">0</span> tasks</span>
+            <span>Completed: <span th:text="${tasks.?[completed == true].size()}">0</span> tasks</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

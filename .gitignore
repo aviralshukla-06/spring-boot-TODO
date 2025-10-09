@@ -1,0 +1,53 @@
+# =========================
+# Java / Maven / Gradle
+# =========================
+target/
+build/
+out/
+!gradle/wrapper/gradle-wrapper.jar
+
+# =========================
+# IntelliJ IDEA / Eclipse / VSCode
+# =========================
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+
+# =========================
+# OS / System Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs / Temp files
+# =========================
+*.log
+logs/
+*.tmp
+
+# =========================
+# Spring Boot specific
+# =========================
+# Exclude local config if it contains secrets
+application-dev.properties
+application-local.properties
+application.yml
+application-dev.yml
+.env
+
+# =========================
+# Test outputs
+# =========================
+test-output/
+surefire-reports/
+
+# =========================
+# Other
+# =========================
+node_modules/
