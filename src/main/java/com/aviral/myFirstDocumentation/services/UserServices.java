@@ -2,9 +2,10 @@ package com.aviral.myFirstDocumentation.services;
 
 import com.aviral.myFirstDocumentation.models.User;
 import com.aviral.myFirstDocumentation.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class UserServices {
     private final UserRepository userRepository;
 
