@@ -24,21 +24,9 @@ This app allows multiple users to manage their todos seamlessly, with role-based
 ---
 
 ## 📁 Project Structure
-backend/
-├── src/main/java/com/aviral/myFirstDocumentation/
-| |__ config/
-│ ├── controller/
-| ├── dto/
-│ ├── exceptions/
-│ ├── models/
-│ ├── repository/
-│ ├── security/
-│ ├── services/
-│ └── myFirstDocumentation.java
-├── src/main/resources/
-│ ├── application.properties
-│ └── static/
-└── pom.xml
+
+<img width="480" height="417" alt="image" src="https://github.com/user-attachments/assets/d0740ef6-3813-48b3-8012-fd1b9fea1089" />
+
 
 
 ---
@@ -51,5 +39,4 @@ backend/
    ```bash
    git clone https://github.com/yourusername/springboot-todo.git
    cd springboot-todo
-```
 
