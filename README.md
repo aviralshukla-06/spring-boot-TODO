@@ -70,7 +70,7 @@ This app allows multiple users to manage their todos seamlessly, with role-based
 
 5. **Test with postman for follow instructions for frontend setup***
 
-#Frontend setup
+      #Frontend setup
 1. Make sure to have:
    React
    Typescript
@@ -79,8 +79,8 @@ This app allows multiple users to manage their todos seamlessly, with role-based
 - copy command
   ```bash
   git clone https://github.com/aviralshukla-06/spring-todo-frontend.git
-
-
-  
+- run foll.
+  ```bash
+  npm run dev
 
 
